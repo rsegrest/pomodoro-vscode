@@ -10,7 +10,11 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:pomodoro-timer-vscode.helloPomodoro"
+    "onCommand:pomodoro-timer-vscode.helloPomodoro",
+    "onCommand:pomodoro-timer-vscode.startPomodoro",
+    "onCommand:pomodoro-timer-vscode.pausePomodoro",
+    "onCommand:pomodoro-timer-vscode.playPomodoro",
+    "onCommand:pomodoro-timer-vscode.resetPomodoro"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -30,9 +34,77 @@
         {
             "command": "pomodoro-timer-vscode.playPomodoro",
             "title": "Play Pomodoro"
+        },
+        {
+            "command": "pomodoro-timer-vscode.resetPomodoro",
+            "title": "Reset Pomodoros"
         }
-
-    ]
+    ],
+    "configuration": {
+        "title": "Pomodoro Timer",
+        "properties": {
+            "pomodoro-timer-vscode.condensedDisplay": {
+                "type": "boolean",
+                "default": false,
+                "description": "Condensed display"
+            },
+            "pomodoro-timer-vscode.pomodoroDuration": {
+                "type": "number",
+                "default": 25,
+                "description": "Pomodoro duration in minutes"
+            },
+            "pomodoro-timer-vscode.shortBreakDuration": {
+                "type": "number",
+                "default": 5,
+                "description": "Short break duration in minutes"
+            },
+            "pomodoro-timer-vscode.longBreakDuration": {
+                "type": "number",
+                "default": 15,
+                "description": "Long break duration in minutes"
+            },
+            "pomodoro-timer-vscode.pomodorosPerLongBreak": {
+                "type": "number",
+                "default": 4,
+                "description": "Number of pomodoros before a long break"
+            },
+            "pomodoro-timer-vscode.showNotifications": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show notifications"
+            },
+            "pomodoro-timer-vscode.showStatusBarItem": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show status bar item"
+            },
+            "pomodoro-timer-vscode.showStatusBarItemProgress": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show status bar item progress"
+            },
+            "pomodoro-timer-vscode.showStatusBarItemProgressAsTime": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show status bar item progress as time"
+            },
+            "pomodoro-timer-vscode.showStatusBarItemProgressAsPercentage": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show status bar item progress as percentage"
+            },
+            "pomodoro-timer-vscode.showStatusBarItemProgressAsBar": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show status bar item progress as bar"
+            },
+            "pomodoro-timer-vscode.showStatusBarItemProgressAsBarWithTime": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show status bar item progress as bar with time"
+            }
+        }
+    }
   },
   "scripts": {
     "lint": "eslint .",
