@@ -1,6 +1,6 @@
 {
-  "name": "hello-world-js",
-  "displayName": "hello-world-js",
+  "name": "pomodoro-timer-vscode",
+  "displayName": "pomodoro-timer-vscode",
   "description": "Hello, world!",
   "version": "0.0.1",
   "engines": {
@@ -10,14 +10,29 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:hello-world-js.helloWorld"
+    "onCommand:pomodoro-timer-vscode.helloPomodoro"
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "hello-world-js.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+        {
+            "command": "pomodoro-timer-vscode.helloPomodoro",
+            "title": "Hello Pomodoro"
+        },
+        {
+            "command": "pomodoro-timer-vscode.startPomodoro",
+            "title": "Start Pomodoro"
+        },
+        {
+            "command": "pomodoro-timer-vscode.pausePomodoro",
+            "title": "Pause Pomodoro"
+        },
+        {
+            "command": "pomodoro-timer-vscode.playPomodoro",
+            "title": "Play Pomodoro"
+        }
+
+    ]
   },
   "scripts": {
     "lint": "eslint .",
