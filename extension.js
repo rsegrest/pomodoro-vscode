@@ -21,7 +21,11 @@ function activate(context) {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from hello-world-js!');
+		vscode.window.showInformationMessage('Hello VSCODE!');
+        // vscode.window.showWarningMessage('Danger Will Robinson! Danger!')
+        // create input box
+        // let inputBox = vscode.window.setStatusBarMessage('🍅');
+        // inputBox.title = "Enter your name";
 	});
 
 	context.subscriptions.push(disposable);
