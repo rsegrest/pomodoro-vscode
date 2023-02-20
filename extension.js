@@ -86,20 +86,19 @@ function advance(vscode) {
 }
 function getTimerSpan() {
     if (mode === MODES.working) {
-        return 25*60*10;
+        return dataManager.getPomodoroLenghtMilliseconds();
     }
     if (mode === MODES.break) {
-        return 5*60*10;
+        return dataManager.getShortBreakLengthMilliseconds();
     }
     if (mode === MODES.longBreak) {
-        return 15*60*10;
+        return dataManager.getLongBreakLengthMilliseconds;
     }
-    return 10000;
+    throw(new Error('Invalid mode: ' + mode));
 }
 function initializeTime() {
     lastTime = new Date().getTime();
     remainingTime = getTimerSpan();
-    console.log(`remainingTime: ${remainingTime}`);
     elapsedTime = 0;
     timerRunning = false;
 }
@@ -114,6 +113,7 @@ function pauseTimer() {
  */
 function activate(context) {
     dataManager = new DataManager(context.workspaceState);
+    viewManager = new ViewManager(); // context
     numTomatoes = dataManager.getTodaysTomatoes();
 
     timerRunning = false;
