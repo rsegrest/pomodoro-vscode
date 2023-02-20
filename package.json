@@ -1,125 +1,119 @@
 {
-  "name": "pomodoro-timer-vscode",
-  "displayName": "pomodoro-timer-vscode",
-  "description": "Hello, world!",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.75.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:pomodoro-timer-vscode.helloPomodoro",
-    "onCommand:pomodoro-timer-vscode.startPomodoro",
-    "onCommand:pomodoro-timer-vscode.pausePomodoro",
-    "onCommand:pomodoro-timer-vscode.playPomodoro",
-    "onCommand:pomodoro-timer-vscode.resetPomodoro"
-  ],
-  "main": "./extension.js",
-  "contributes": {
-    "commands": [
-        {
-            "command": "pomodoro-timer-vscode.helloPomodoro",
-            "title": "Hello Pomodoro"
-        },
-        {
-            "command": "pomodoro-timer-vscode.startPomodoro",
-            "title": "Start Pomodoro"
-        },
-        {
-            "command": "pomodoro-timer-vscode.pausePomodoro",
-            "title": "Pause Pomodoro"
-        },
-        {
-            "command": "pomodoro-timer-vscode.playPomodoro",
-            "title": "Play Pomodoro"
-        },
-        {
-            "command": "pomodoro-timer-vscode.resetPomodoro",
-            "title": "Reset Pomodoros"
-        }
+    "name": "pomodoro-timer-vscode",
+    "displayName": "pomodoro-timer-vscode",
+    "description": "Pomodoro Timer",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Other"
     ],
-    "configuration": {
-        "title": "Pomodoro Timer",
-        "properties": {
-            "pomodoro-timer-vscode.condensedDisplay": {
-                "type": "boolean",
-                "default": false,
-                "description": "Condensed display"
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "pomodoro-timer-vscode.helloPomodoro",
+                "title": "Hello Pomodoro"
             },
-            "pomodoro-timer-vscode.pomodoroDuration": {
-                "type": "number",
-                "default": 25,
-                "description": "Pomodoro duration in minutes"
+            {
+                "command": "pomodoro-timer-vscode.startPomodoro",
+                "title": "Start Pomodoro"
             },
-            "pomodoro-timer-vscode.shortBreakDuration": {
-                "type": "number",
-                "default": 5,
-                "description": "Short break duration in minutes"
+            {
+                "command": "pomodoro-timer-vscode.pausePomodoro",
+                "title": "Pause Pomodoro"
             },
-            "pomodoro-timer-vscode.longBreakDuration": {
-                "type": "number",
-                "default": 15,
-                "description": "Long break duration in minutes"
+            {
+                "command": "pomodoro-timer-vscode.playPomodoro",
+                "title": "Play Pomodoro"
             },
-            "pomodoro-timer-vscode.pomodorosPerLongBreak": {
-                "type": "number",
-                "default": 4,
-                "description": "Number of pomodoros before a long break"
-            },
-            "pomodoro-timer-vscode.showNotifications": {
-                "type": "boolean",
-                "default": true,
-                "description": "Show notifications"
-            },
-            "pomodoro-timer-vscode.showStatusBarItem": {
-                "type": "boolean",
-                "default": true,
-                "description": "Show status bar item"
-            },
-            "pomodoro-timer-vscode.showStatusBarItemProgress": {
-                "type": "boolean",
-                "default": true,
-                "description": "Show status bar item progress"
-            },
-            "pomodoro-timer-vscode.showStatusBarItemProgressAsTime": {
-                "type": "boolean",
-                "default": true,
-                "description": "Show status bar item progress as time"
-            },
-            "pomodoro-timer-vscode.showStatusBarItemProgressAsPercentage": {
-                "type": "boolean",
-                "default": false,
-                "description": "Show status bar item progress as percentage"
-            },
-            "pomodoro-timer-vscode.showStatusBarItemProgressAsBar": {
-                "type": "boolean",
-                "default": false,
-                "description": "Show status bar item progress as bar"
-            },
-            "pomodoro-timer-vscode.showStatusBarItemProgressAsBarWithTime": {
-                "type": "boolean",
-                "default": false,
-                "description": "Show status bar item progress as bar with time"
+            {
+                "command": "pomodoro-timer-vscode.resetPomodoro",
+                "title": "Reset Pomodoros"
+            }
+        ],
+        "configuration": {
+            "title": "Pomodoro Timer",
+            "properties": {
+                "pomodoro-timer-vscode.condensedDisplay": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Condensed display"
+                },
+                "pomodoro-timer-vscode.pomodoroDuration": {
+                    "type": "number",
+                    "default": 25,
+                    "description": "Pomodoro duration in minutes"
+                },
+                "pomodoro-timer-vscode.shortBreakDuration": {
+                    "type": "number",
+                    "default": 5,
+                    "description": "Short break duration in minutes"
+                },
+                "pomodoro-timer-vscode.longBreakDuration": {
+                    "type": "number",
+                    "default": 15,
+                    "description": "Long break duration in minutes"
+                },
+                "pomodoro-timer-vscode.pomodorosPerLongBreak": {
+                    "type": "number",
+                    "default": 4,
+                    "description": "Number of pomodoros before a long break"
+                },
+                "pomodoro-timer-vscode.showNotifications": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show notifications"
+                },
+                "pomodoro-timer-vscode.showStatusBarItem": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show status bar item"
+                },
+                "pomodoro-timer-vscode.showStatusBarItemProgress": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show status bar item progress"
+                },
+                "pomodoro-timer-vscode.showStatusBarItemProgressAsTime": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show status bar item progress as time"
+                },
+                "pomodoro-timer-vscode.showStatusBarItemProgressAsPercentage": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show status bar item progress as percentage"
+                },
+                "pomodoro-timer-vscode.showStatusBarItemProgressAsBar": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show status bar item progress as bar"
+                },
+                "pomodoro-timer-vscode.showStatusBarItemProgressAsBarWithTime": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show status bar item progress as bar with time"
+                }
             }
         }
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "fixfile": "mv ./.vscode-test/user-data/1.75.1-ma ./.vscode-test/user-data/1.75.1-main.sock",
+        "test": "mv ./.vscode-test/user-data/1.75.1-ma ./.vscode-test/user-data/1.75.1-main.sock; node ./test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^8.0.1",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16.x",
+        "@types/vscode": "^1.75.0",
+        "@vscode/test-electron": "^2.2.2",
+        "eslint": "^8.33.0",
+        "glob": "^8.1.0",
+        "mocha": "^10.1.0",
+        "typescript": "^4.9.4"
     }
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "node ./test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.75.0",
-    "@types/glob": "^8.0.1",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
-    "eslint": "^8.33.0",
-    "glob": "^8.1.0",
-    "mocha": "^10.1.0",
-    "typescript": "^4.9.4",
-    "@vscode/test-electron": "^2.2.2"
-  }
 }
