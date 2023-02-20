@@ -7,13 +7,14 @@ const vscode = require('vscode');
 
 let dataManager = null;
 let viewManager = null;
+let interval = null;
 
 let numTomatoes = 0;
 let elapsedTime = 0;
 let lastTime = new Date().getTime();
-let timerSpan = 25*60*10;
+let timerSpan = null;
 let timerRunning = true;
-let remainingTime = timerSpan;
+let remainingTime = null;
 
 let mode = MODES.working;
 let playButton = null;
@@ -48,7 +49,7 @@ function changeMode() {
         modeIcon = workingIcon;
     }
 }
-function getTomatoDisplayString(vscode) {
+function getTomatoDisplayString() {
     const isCondensed = dataManager.getIsCondensed(vscode);
 
     if (isCondensed) {
@@ -60,17 +61,18 @@ function getTomatoDisplayString(vscode) {
     }
     return tomatoes;
 }
-function advance(vscode) {
+function advance() {
 
     const now = new Date().getTime();
     if (timerRunning) {
+        console.log('timerRunning')
         const delta = (new Date().getTime() - lastTime);
         elapsedTime += delta;
         remainingTime = timerSpan - elapsedTime;
-        const tomatoes = getTomatoDisplayString(vscode);
+        const tomatoes = getTomatoDisplayString();
         const timerString = formatTime(remainingTime);
         vscode.window.setStatusBarMessage(tomatoes + ' | ' + modeIcon + ' | ' + timerString);
-        
+
         if (remainingTime <= 0) {
             if (mode === MODES.working) {
                 numTomatoes += 1;
@@ -87,19 +89,20 @@ function advance(vscode) {
 }
 function getTimerSpan() {
     if (mode === MODES.working) {
-        return dataManager.getPomodoroLenghtMilliseconds();
+        return dataManager.getPomodoroLenghtMilliseconds(vscode);
     }
     if (mode === MODES.break) {
-        return dataManager.getShortBreakLengthMilliseconds();
+        return dataManager.getShortBreakLengthMilliseconds(vscode);
     }
     if (mode === MODES.longBreak) {
-        return dataManager.getLongBreakLengthMilliseconds;
+        return dataManager.getLongBreakLengthMilliseconds(vscode);
     }
     throw(new Error('Invalid mode: ' + mode));
 }
 function initializeTime() {
     lastTime = new Date().getTime();
-    remainingTime = getTimerSpan();
+    timerSpan = getTimerSpan();
+    remainingTime = timerSpan;
     elapsedTime = 0;
     timerRunning = false;
 }
@@ -109,32 +112,44 @@ function playTimer() {
 function pauseTimer() {
     timerRunning = false;
 }
+function showStatusDisplay() {
+
+    if (!playButton) {
+        playButton = vscode.window.createStatusBarItem(
+            vscode.StatusBarAlignment.Left, 1
+        );
+    }
+
+    playButton.text = playButtonIcon;
+    playButton.command = 'pomodoro-timer-vscode.playPomodoro';
+    if (!timerRunning) {
+        playButton.show();
+    }
+
+    if (!pauseButton) {
+        pauseButton = vscode.window.createStatusBarItem(
+            vscode.StatusBarAlignment.Left, 2
+        );
+    }
+
+    pauseButton.text = pauseButtonIcon;
+    pauseButton.command = 'pomodoro-timer-vscode.pausePomodoro';
+    if (timerRunning) {
+        pauseButton.hide();
+    }
+}
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
     dataManager = new DataManager(context.workspaceState);
     viewManager = new ViewManager(); // context
-    numTomatoes = 0;
-    // numTomatoes = dataManager.getTodaysTomatoes();
-    pomodorosPerLongBreak = dataManager.getPomodorosPerLongBreak();
+    dataManager.clearAllEarnedTomatoes();
+    // numTomatoes = 0;
+    numTomatoes = dataManager.getTodaysTomatoes();
+    pomodorosPerLongBreak = dataManager.getPomodorosPerLongBreak(vscode);
     timerRunning = false;
 
-    playButton = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Left, 1
-    );
-
-    playButton.text = playButtonIcon;
-    playButton.command = 'pomodoro-timer-vscode.playPomodoro';
-    playButton.show();
-
-    pauseButton = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Left, 2
-    );
-
-    pauseButton.text = pauseButtonIcon;
-    pauseButton.command = 'pomodoro-timer-vscode.pausePomodoro';
-    pauseButton.hide();
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
@@ -145,6 +160,7 @@ function activate(context) {
     // The commandId parameter must match the command field in package.json
     let pomReady = vscode.commands.registerCommand('pomodoro-timer-vscode.pomodoroReady', function () {
         initializeTime();
+        showStatusDisplay();
         vscode.window.showInformationMessage('🍅 timer ready! Hit play to start working');
     });
     // let startPom = vscode.commands.registerCommand('pomodoro-timer-vscode.startPomodoro', function () {
@@ -158,14 +174,17 @@ function activate(context) {
         pauseButton.hide();
     });
     let playPom = vscode.commands.registerCommand('pomodoro-timer-vscode.playPomodoro', function () {
+        showStatusDisplay();
         vscode.window.showInformationMessage('🍅 timer started');
         playTimer();
         playButton.hide();
         pauseButton.show();
+
+        interval = this.setInterval(advance, 10);
+        // vscode.window.setStatusBarMessage(remainingTime);
+        vscode.window.setStatusBarMessage('🍅' + ' | ' + modeIcon + ' | ' + formatTime(remainingTime));
     });
 
-    this.setInterval(advance, 10);
-    vscode.window.setStatusBarMessage(remainingTime);
 
     context.subscriptions.push(pomReady);
     context.subscriptions.push(pausePom);

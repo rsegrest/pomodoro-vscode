@@ -10,6 +10,10 @@ class DataManager {
     appendEarnedTomato() {
         this.appendEarnedTomatoForDate((new Date()).toISOString())
     }
+
+    clearAllEarnedTomatoes() {
+        this.storage.update('earnedTomatoes', JSON.stringify([]));
+    }
     
     appendEarnedTomatoForDate(dateString) {
         const date = new Date(dateString).toISOString();
@@ -22,11 +26,15 @@ class DataManager {
         this.storage.update('earnedTomatoes', jsonData);
     }
 
+
     // Pass date as a Date object
     getDateString(dateObject) {
         const offset = dateObject.getTimezoneOffset();
         // const adjustedDate = (dateObject.getTime() + (offset*60*1000));
-        const adjustedDate = new Date((dateObject.getTime() + (offset*60*1000)).toString());
+        const startTime = dateObject.getTime();
+        const offsetMilliseconds = offset*60*1000;
+        const adjustedTime = startTime + offsetMilliseconds;
+        const adjustedDate = new Date(adjustedTime);
         const dateString = adjustedDate.toISOString().split('T')[0];
         console.log('dateString: ' + dateString)
         return dateString;
@@ -55,28 +63,38 @@ class DataManager {
         this.storage.update(key, jsonData);
     }
 
+    getConfiguration(vscode) {
+        const config = vscode.workspace.getConfiguration('pomodoro-timer-vscode');
+        return config;
+    }
+
     getIsCondensed(vscode) {
-        const isCondensed = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('condensedDisplay');
+        const configuration = this.getConfiguration(vscode);
+        const isCondensed = configuration.get('condensedDisplay');
         return isCondensed;
     }
 
     getPomodoroLenghtMilliseconds(vscode) {
-        const pomLengthInMinutes = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('pomodoroDuration');
+        const configuration = this.getConfiguration(vscode);
+        const pomLengthInMinutes = configuration.get('pomodoroDuration');
         return pomLengthInMinutes*60*1000;
     }
 
     getShortBreakLengthMilliseconds(vscode) {
-        const shortBreakLengthInMinutes = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('shortBreakDuration');
+        const configuration = this.getConfiguration(vscode);
+        const shortBreakLengthInMinutes = configuration.get('shortBreakDuration');
         return shortBreakLengthInMinutes*60*1000;
     }
 
     getLongBreakLengthMilliseconds(vscode) {
-        const longBreakLengthInMinutes = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('longBreakDuration');
+        const configuration = this.getConfiguration(vscode);
+        const longBreakLengthInMinutes = configuration.get('longBreakDuration');
         return longBreakLengthInMinutes*60*1000;
     }
 
     getPomodorosPerLongBreak(vscode) {
-        const pomodorosPerLongBreak = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('pomodorosPerLongBreak');
+        const configuration = this.getConfiguration(vscode);
+        const pomodorosPerLongBreak = configuration.get('pomodorosPerLongBreak');
         return pomodorosPerLongBreak;
     }
 }
