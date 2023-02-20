@@ -2,10 +2,13 @@
 
 Use the pomodoro method while coding in VSCode to help stay focused, track your progress, and manage your time. Work for 25 minutes and then take a short break, and a longer break after finishing four work sessions.
 
-## Features
 
-
-\!\[Preview\]\(images/extension_statusbar_screenshot.png\)
+| Symbol   | Meaning |
+| ------- | --- |
+| 🍅🍅🍅      | Shows how many Pomodoros have been earned today |
+| 🛠️            | Displayed during work session (Pomodoro) |
+| ☕️            | Displayed during short break |
+| 🍔            | Displayed during long break |
 
 ## Extension Settings
 
