@@ -1,8 +1,8 @@
 {
   "name": "pomodoro-timer-vscode",
-  "displayName": "pomodoro-timer-vscode",
-  "description": "Pomodoro Timer",
-  "version": "0.0.1",
+  "displayName": "🍅 Pomodoro Method (Tomato) Timer ⏰",
+  "description": "🍅 Pomodoro Timer ⏰",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -58,8 +58,8 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "fixfile": "mv ./.vscode-test/user-data/1.75.1-ma ./.vscode-test/user-data/1.75.1-main.sock",
-    "test": "jest"
+    "test": "jest",
+    "fixfile": "mv ./.vscode-test/user-data/1.75.1-ma ./.vscode-test/user-data/1.75.1-main.sock"
   },
   "devDependencies": {
     "@types/glob": "^8.0.1",
