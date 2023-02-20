@@ -174,9 +174,9 @@ function startExtension() {
     pauseButton = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left, 2
     );
-    messageDisplay = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Left, 3
-    );
+    // messageDisplay = vscode.window.createStatusBarItem(
+    //     vscode.StatusBarAlignment.Left, 3
+    // );
     // vscode.window.setStatusBarMessage('👈 Start earning tomatoes! |');
 }
 
@@ -187,8 +187,6 @@ function startExtension() {
 function activate(context) {
     dataManager = new DataManager(context.workspaceState);
     viewManager = new ViewManager(); // context
-    dataManager.clearAllEarnedTomatoes();
-    // numTomatoes = 0;
     numTomatoes = dataManager.getTodaysTomatoes();
     pomodorosPerLongBreak = dataManager.getPomodorosPerLongBreak(vscode);
     startExtension();
