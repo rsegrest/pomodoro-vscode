@@ -22,10 +22,13 @@ class DataManager {
         this.storage.update('earnedTomatoes', jsonData);
     }
 
-    getDateString(thisDate) {
-        const offset = thisDate.getTimezoneOffset();
-        const adjustedDate = new Date(thisDate.getTime() + (offset*60*1000));
+    // Pass date as a Date object
+    getDateString(dateObject) {
+        const offset = dateObject.getTimezoneOffset();
+        // const adjustedDate = (dateObject.getTime() + (offset*60*1000));
+        const adjustedDate = new Date((dateObject.getTime() + (offset*60*1000)).toString());
         const dateString = adjustedDate.toISOString().split('T')[0];
+        console.log('dateString: ' + dateString)
         return dateString;
     }
 

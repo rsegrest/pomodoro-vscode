@@ -115,7 +115,8 @@ function pauseTimer() {
 function activate(context) {
     dataManager = new DataManager(context.workspaceState);
     viewManager = new ViewManager(); // context
-    numTomatoes = dataManager.getTodaysTomatoes();
+    numTomatoes = 0;
+    // numTomatoes = dataManager.getTodaysTomatoes();
     pomodorosPerLongBreak = dataManager.getPomodorosPerLongBreak();
     timerRunning = false;
 
@@ -138,14 +139,13 @@ function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('"pomodoro-timer" is now active');
-    initializeTime();
+    // initializeTime();
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let pomReady = vscode.commands.registerCommand('pomodoro-timer-vscode.pomodoroReady', function () {
         initializeTime();
         vscode.window.showInformationMessage('🍅 timer ready! Hit play to start working');
-
     });
     // let startPom = vscode.commands.registerCommand('pomodoro-timer-vscode.startPomodoro', function () {
     //     vscode.window.showInformationMessage('🍅 timer ready!');
