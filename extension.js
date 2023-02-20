@@ -24,6 +24,7 @@ const workingIcon = '🛠️';
 const breakIcon = '☕';
 const longBreakIcon = '🍔';
 let modeIcon = workingIcon;
+let pomodorosPerLongBreak = 4;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -35,7 +36,7 @@ function formatTime(time) {
 }
 function changeMode() {
     if (mode === MODES.working) {
-        if (numTomatoes % 4 === 0) {
+        if (numTomatoes % pomodorosPerLongBreak === 0) {
             mode = MODES.longBreak;
             modeIcon = longBreakIcon;
         } else {
@@ -115,8 +116,9 @@ function activate(context) {
     dataManager = new DataManager(context.workspaceState);
     viewManager = new ViewManager(); // context
     numTomatoes = dataManager.getTodaysTomatoes();
-
+    pomodorosPerLongBreak = dataManager.getPomodorosPerLongBreak();
     timerRunning = false;
+
     playButton = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left, 1
     );
@@ -140,11 +142,11 @@ function activate(context) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    // let pomReady = vscode.commands.registerCommand('pomodoro-timer-vscode.pomodoroReady', function () {
-    //     initializeTime();
-    //     vscode.window.showInformationMessage('🍅 timer ready! Hit play to start working');
+    let pomReady = vscode.commands.registerCommand('pomodoro-timer-vscode.pomodoroReady', function () {
+        initializeTime();
+        vscode.window.showInformationMessage('🍅 timer ready! Hit play to start working');
 
-    // });
+    });
     // let startPom = vscode.commands.registerCommand('pomodoro-timer-vscode.startPomodoro', function () {
     //     vscode.window.showInformationMessage('🍅 timer ready!');
     //     initializeTime();
@@ -165,8 +167,7 @@ function activate(context) {
     this.setInterval(advance, 10);
     vscode.window.setStatusBarMessage(remainingTime);
 
-    // context.subscriptions.push(helloPom);
-    // context.subscriptions.push(startPom);
+    context.subscriptions.push(pomReady);
     context.subscriptions.push(pausePom);
     context.subscriptions.push(playPom);
 

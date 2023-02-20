@@ -13,12 +13,8 @@
     "contributes": {
         "commands": [
             {
-                "command": "pomodoro-timer-vscode.helloPomodoro",
-                "title": "Hello Pomodoro"
-            },
-            {
-                "command": "pomodoro-timer-vscode.startPomodoro",
-                "title": "Start Pomodoro"
+                "command": "pomodoro-timer-vscode.pomReady",
+                "title": "Initialize Pomodoro Timer"
             },
             {
                 "command": "pomodoro-timer-vscode.pausePomodoro",
@@ -27,10 +23,6 @@
             {
                 "command": "pomodoro-timer-vscode.playPomodoro",
                 "title": "Play Pomodoro"
-            },
-            {
-                "command": "pomodoro-timer-vscode.resetPomodoro",
-                "title": "Reset Pomodoros"
             }
         ],
         "configuration": {

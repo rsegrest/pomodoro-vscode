@@ -73,8 +73,8 @@ class DataManager {
     }
 
     getPomodorosPerLongBreak(vscode) {
-        const longBreakLengthInMinutes = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('pomodorosPerLongBreak');
-        return longBreakLengthInMinutes*60*1000;
+        const pomodorosPerLongBreak = vscode.workspace.getConfiguration('pomodoro-timer-vscode').get('pomodorosPerLongBreak');
+        return pomodorosPerLongBreak;
     }
 }
 module.exports = DataManager;
