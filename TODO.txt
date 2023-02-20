@@ -1,6 +1,44 @@
 20 Feb 2023
 
-TODO: Use configuration values for pomodoro timer, long break, short break
-
+: Start Pomodoro timer on opening VSCode
+: Reset timer / timer display after time runs out
+: Use configuration values for pomodoro timer, long break, short break
 : Associate record of each pomodoro with date and time
 : Save data
+
+
+"pomodoro-timer-vscode.showNotifications": {
+    "type": "boolean",
+    "default": true,
+    "description": "Show notifications"
+},
+"pomodoro-timer-vscode.showStatusBarItem": {
+    "type": "boolean",
+    "default": true,
+    "description": "Show status bar item"
+},
+"pomodoro-timer-vscode.showStatusBarItemProgress": {
+    "type": "boolean",
+    "default": true,
+    "description": "Show status bar item progress"
+},
+"pomodoro-timer-vscode.showStatusBarItemProgressAsTime": {
+    "type": "boolean",
+    "default": true,
+    "description": "Show status bar item progress as time"
+},
+"pomodoro-timer-vscode.showStatusBarItemProgressAsPercentage": {
+    "type": "boolean",
+    "default": false,
+    "description": "Show status bar item progress as percentage"
+},
+"pomodoro-timer-vscode.showStatusBarItemProgressAsBar": {
+    "type": "boolean",
+    "default": false,
+    "description": "Show status bar item progress as bar"
+},
+"pomodoro-timer-vscode.showStatusBarItemProgressAsBarWithTime": {
+    "type": "boolean",
+    "default": false,
+    "description": "Show status bar item progress as bar with time"
+}
