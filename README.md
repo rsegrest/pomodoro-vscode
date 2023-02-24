@@ -24,7 +24,7 @@ Configure the Pomodoro Timer using the following settings:
 
 More features planned. If you'd like to provide feedback, I'd love to hear it! Email me at rsegrest77@gmail.com
 
-### 1.0.0
+### 0.1.2
 
-Initial release of the Pomodoro Timer VS Code extension
+Pre-release (release candidate) version of the Pomodoro Timer VS Code extension
 

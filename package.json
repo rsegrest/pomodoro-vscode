@@ -4,7 +4,7 @@
   "description": "Use the pomodoro method while coding in VSCode to help stay focused, track your progress, and manage your time. Work for 25 minutes and then take a short break, and a longer break after finishing four work sessions.",
   "publisher": "ricksegrest",
   "pricing": "Free",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "UNLICENSED",
   "private": "true",
   "author": {
