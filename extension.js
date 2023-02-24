@@ -30,8 +30,6 @@ let playButton = null;
 let pauseButton = null;
 
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 const pad = (n) => {
     return (n < 10) ? ("0" + n) : n;
 }
@@ -97,9 +95,13 @@ function advance() {
         }
         playButton.text = '';
         pauseButton.text = getStatusDisplayString();
+        playButton.hide();
+        pauseButton.show();
     } else {
         playButton.text = getStatusDisplayString();
         pauseButton.text = '';
+        pauseButton.hide();
+        playButton.show();
     }
 
     lastTime = now;
@@ -191,13 +193,8 @@ function activate(context) {
     pomodorosPerLongBreak = dataManager.getPomodorosPerLongBreak(vscode);
     startExtension();
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
     console.log('"pomodoro-timer" is now active');
     vscode.window.showInformationMessage('🍅 timer ready! Hit play to start work session');
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
     let pausePom = vscode.commands.registerCommand('pomodoro-timer-vscode.pausePomodoro', function () {
         vscode.window.showInformationMessage('🍅 timer paused');
         pauseTimer();

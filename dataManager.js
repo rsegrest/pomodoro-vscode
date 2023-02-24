@@ -4,14 +4,24 @@ class DataManager {
     }
 
     getEarnedTomatoes() {
-        return JSON.parse(this.storage.get('earnedTomatoes')) || JSON.parse([]);
+        try {
+            const tomatoesInStorage = this.storage.get('earnedTomatoes');
+            if ((tomatoesInStorage === null) || (tomatoesInStorage === 'undefined')) {
+                this.initializeEarnedTomatoes();
+                return [];
+            }
+            return JSON.parse(tomatoesInStorage);
+        } catch (error) {
+            this.initializeEarnedTomatoes();
+            return [];
+        }
     }
 
     appendEarnedTomato() {
         this.appendEarnedTomatoForDate((new Date()).toISOString())
     }
 
-    clearAllEarnedTomatoes() {
+    initializeEarnedTomatoes() {
         this.storage.update('earnedTomatoes', JSON.stringify([]));
     }
     

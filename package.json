@@ -1,8 +1,21 @@
 {
   "name": "pomodoro-timer-vscode",
   "displayName": "🍅 Pomodoro Method (Tomato) Timer ⏰",
-  "description": "🍅 Pomodoro Timer ⏰",
-  "version": "1.0.0",
+  "description": "Use the pomodoro method while coding in VSCode to help stay focused, track your progress, and manage your time. Work for 25 minutes and then take a short break, and a longer break after finishing four work sessions.",
+  "publisher": "ricksegrest",
+  "pricing": "Free",
+  "version": "0.1.1",
+  "license": "UNLICENSED",
+  "private": "true",
+  "author": {
+    "name": "Rick Segrest",
+    "email": "rsegrest77+pomodoro_vsc@gmail.com",
+    "url": "https://www.ricksegrest.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rsegrest/pomodoro-vscode.git"
+  },
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -11,7 +24,7 @@
   ],
   "main": "./extension.js",
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
