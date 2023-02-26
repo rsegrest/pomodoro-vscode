@@ -1,64 +1,56 @@
-import * as vscode from "vscode";
-import { Memento, WorkspaceConfiguration } from "vscode";
-import EarnedTomato from "../types/tomato";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class DataManager {
-    private storage: Memento;
-    constructor(storage:Memento) {
+    constructor(storage) {
         this.storage = storage;
     }
-
     getEarnedTomatoes() {
         try {
-            const tomatoesInStorage:EarnedTomato[]|undefined = this.storage.get('earnedTomatoes');
+            const tomatoesInStorage = this.storage.get('earnedTomatoes');
             if ((tomatoesInStorage === null) || (typeof tomatoesInStorage === 'undefined')) {
                 this.initializeEarnedTomatoes();
                 return [];
             }
             return JSON.parse(tomatoesInStorage.toString());
-        } catch (error) {
+        }
+        catch (error) {
             this.initializeEarnedTomatoes();
             return [];
         }
     }
-
     appendEarnedTomato() {
         this.appendEarnedTomatoForDate((new Date()).toISOString());
     }
-
     initializeEarnedTomatoes() {
         this.storage.update('earnedTomatoes', JSON.stringify([]));
     }
-    
-    appendEarnedTomatoForDate(dateString:string) {
+    appendEarnedTomatoForDate(dateString) {
         const date = new Date(dateString).toISOString();
         const prevState = this.getEarnedTomatoes();
         const newState = [
             ...prevState,
-            {time: date},
-        ]
+            { time: date },
+        ];
         const jsonData = JSON.stringify(newState);
         this.storage.update('earnedTomatoes', jsonData);
     }
-
-
     // Pass date as a Date object
-    getDateString(dateObject:Date) {
+    getDateString(dateObject) {
         const offset = dateObject.getTimezoneOffset();
         // const adjustedDate = (dateObject.getTime() + (offset*60*1000));
         const startTime = dateObject.getTime();
-        const offsetMilliseconds = offset*60*1000;
+        const offsetMilliseconds = offset * 60 * 1000;
         const adjustedTime = startTime + offsetMilliseconds;
         const adjustedDate = new Date(adjustedTime);
         const dateString = adjustedDate.toISOString().split('T')[0];
-        console.log('dateString: ' + dateString)
+        console.log('dateString: ' + dateString);
         return dateString;
     }
-
-    getTomatoesForDay(date:Date) {
+    getTomatoesForDay(date) {
         const targetDateString = this.getDateString(date);
         const earnedTomatoes = this.getEarnedTomatoes();
-        const dates = earnedTomatoes.map((tomato:EarnedTomato) => new Date(tomato.date));
-        const tomatoesForDay = dates.filter((date:Date) => {
+        const dates = earnedTomatoes.map((tomato) => new Date(tomato.date));
+        const tomatoesForDay = dates.filter((date) => {
             const thisDateString = this.getDateString(date);
             return thisDateString === targetDateString;
         });
@@ -69,61 +61,54 @@ class DataManager {
             return 0;
         }
     }
-
     getTodaysTomatoes() {
         return this.getTomatoesForDay(new Date());
     }
-
-    saveBulkData(key:string, data:unknown) {
+    saveBulkData(key, data) {
         const jsonData = JSON.stringify(data);
         this.storage.update(key, jsonData);
     }
-
-    getConfiguration(workspace:(typeof vscode.workspace)):WorkspaceConfiguration {
+    getConfiguration(workspace) {
         const config = workspace.getConfiguration('pomodoro-timer-vscode');
         return config;
     }
-
-    getIsCondensed(workspace:(typeof vscode.workspace)):boolean {
+    getIsCondensed(workspace) {
         const configuration = this.getConfiguration(workspace);
-        const isCondensed = configuration.get('condensedDisplay') as boolean;
+        const isCondensed = configuration.get('condensedDisplay');
         return isCondensed;
     }
-
-    getPomodoroLenghtMilliseconds(workspace:(typeof vscode.workspace)):number {
+    getPomodoroLenghtMilliseconds(workspace) {
         const configuration = this.getConfiguration(workspace);
-        const pomLengthInMinutes:number|undefined = configuration.get('pomodoroDuration');
+        const pomLengthInMinutes = configuration.get('pomodoroDuration');
         if (typeof pomLengthInMinutes === 'undefined') {
-            return 25*60*1000;
+            return 25 * 60 * 1000;
         }
-        return pomLengthInMinutes*60*1000;
+        return pomLengthInMinutes * 60 * 1000;
     }
-
-    getShortBreakLengthMilliseconds(workspace:(typeof vscode.workspace)):number {
+    getShortBreakLengthMilliseconds(workspace) {
         const configuration = this.getConfiguration(workspace);
-        const shortBreakLengthInMinutes:number|undefined = configuration.get('shortBreakDuration');
+        const shortBreakLengthInMinutes = configuration.get('shortBreakDuration');
         if (typeof shortBreakLengthInMinutes === 'undefined') {
-            return 5*60*1000;
+            return 5 * 60 * 1000;
         }
-        return shortBreakLengthInMinutes*60*1000;
+        return shortBreakLengthInMinutes * 60 * 1000;
     }
-
-    getLongBreakLengthMilliseconds(workspace:(typeof vscode.workspace)):number {
-        const configuration = this.getConfiguration(workspace) as vscode.WorkspaceConfiguration;
-        const longBreakLengthInMinutes:number|undefined = configuration.get('longBreakDuration');
+    getLongBreakLengthMilliseconds(workspace) {
+        const configuration = this.getConfiguration(workspace);
+        const longBreakLengthInMinutes = configuration.get('longBreakDuration');
         if (typeof longBreakLengthInMinutes === 'undefined') {
-            return 15*60*1000;
+            return 15 * 60 * 1000;
         }
-        return longBreakLengthInMinutes*60*1000;
+        return longBreakLengthInMinutes * 60 * 1000;
     }
-
-    getPomodorosPerLongBreak(workspace:(typeof vscode.workspace)):number {
+    getPomodorosPerLongBreak(workspace) {
         const configuration = this.getConfiguration(workspace);
         const pomodorosPerLongBreak = configuration.get('pomodorosPerLongBreak');
         if (typeof pomodorosPerLongBreak === 'undefined') {
             return 4;
         }
-        return pomodorosPerLongBreak as number;
+        return pomodorosPerLongBreak;
     }
 }
-export default DataManager;
+exports.default = DataManager;
+//# sourceMappingURL=dataManager.js.map

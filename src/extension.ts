@@ -2,10 +2,11 @@ import * as vscode from 'vscode';
 // const MODES = require('./modes').modes;
 // import * as MODES from './src/types/modes';
 import MODES from './types/modes';
-
 import DATA_MANAGER from './data/dataManager';
+// import TreeDataProvider from './treeDataProvider';
+
+
 // const ViewManager = require('./viewManager');
-// const TreeDataProvider = require('./treeDataProvider');
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 // const vscode = require('vscode');
@@ -39,9 +40,7 @@ let pauseButton:vscode.StatusBarItem|null = null;
 
 const pad = (n:number) => n < 10 ? '0' + n : n;
 const formatTime = (time:number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time - minutes * 60;
-    return `${pad(minutes)}:${pad(seconds)}`;
+    return Math.floor(time/60000) + ':' + pad(Math.floor((time%60000)/1000));
 }
 
 function getTimerSpan() {
@@ -66,15 +65,22 @@ function initializeTime() {
     elapsedTime = 0;
     timerRunning = false;
 }
-
-
-function playTimer() {
-    timerRunning = true;
-}
-
-
-function pauseTimer() {
-    timerRunning = false;
+function changeMode() {
+    if (mode === MODES.working) {
+        if (numTomatoes % pomodorosPerLongBreak === 0) {
+            mode = MODES.longBreak;
+            modeIcon = longBreakIcon;
+            timerSpan = getTimerSpan();
+        } else {
+            mode = MODES.break;
+            modeIcon = breakIcon;
+        }
+    } else {
+        mode = MODES.working;
+        modeIcon = workingIcon;
+    }
+    remainingTime = timerSpan;
+    elapsedTime = 0;
 }
 
 function getTomatoDisplayString():string {
@@ -99,6 +105,49 @@ function getStatusDisplayString():string {
     }
     return playButtonIcon + ' | ' + tomatoes + ' | ' + modeIcon + ' | ' + formatTime(remainingTime as number) + ' |';
 }
+
+function advance() {
+    
+    const now = new Date().getTime();
+    if (timerRunning) {
+        const delta = (new Date().getTime() - lastTime);
+        elapsedTime += delta;
+        remainingTime = (timerSpan as number) - elapsedTime;
+        if (remainingTime <= 0) {
+            if (mode === MODES.working) {
+                numTomatoes += 1;
+                vscode.window.showInformationMessage('You earned a 🍅! Now take a break.');
+            } else {
+                vscode.window.showInformationMessage('Back to work!');
+            }
+            changeMode();
+            initializeTime();
+            timerRunning = false;
+        }
+        (playButton as vscode.StatusBarItem).text = '';
+        (pauseButton as vscode.StatusBarItem).text = getStatusDisplayString();
+        (playButton as vscode.StatusBarItem).hide();
+        (pauseButton as vscode.StatusBarItem).show();
+    } else {
+        (playButton as vscode.StatusBarItem).text = getStatusDisplayString();
+        (pauseButton as vscode.StatusBarItem).text = '';
+        (pauseButton as vscode.StatusBarItem).hide();
+        (playButton as vscode.StatusBarItem).show();
+    }
+
+    lastTime = now;
+}
+
+function playTimer() {
+    timerRunning = true;
+}
+
+
+function pauseTimer() {
+    timerRunning = false;
+}
+
+
 
 function showStatusDisplay() {
 
@@ -141,65 +190,19 @@ function startExtension() {
     // vscode.window.setStatusBarMessage('👈 Start earning tomatoes! |');
 }
 
-function changeMode() {
-    if (mode === MODES.working) {
-        if (numTomatoes % pomodorosPerLongBreak === 0) {
-            mode = MODES.longBreak;
-            modeIcon = longBreakIcon;
-            timerSpan = getTimerSpan();
-        } else {
-            mode = MODES.break;
-            modeIcon = breakIcon;
-        }
-    } else {
-        mode = MODES.working;
-        modeIcon = workingIcon;
-    }
-    remainingTime = timerSpan;
-    elapsedTime = 0;
-}
 
-function advance() {
-
-    const now = new Date().getTime();
-    if (timerRunning) {
-        const delta = (new Date().getTime() - lastTime);
-        elapsedTime += delta;
-        remainingTime = (timerSpan as number) - elapsedTime;
-        if (remainingTime <= 0) {
-            if (mode === MODES.working) {
-                numTomatoes += 1;
-                vscode.window.showInformationMessage('You earned a 🍅! Now take a break.');
-            } else {
-                vscode.window.showInformationMessage('Back to work!');
-            }
-            changeMode();
-            initializeTime();
-            timerRunning = false;
-        }
-        (playButton as vscode.StatusBarItem).text = '';
-        (pauseButton as vscode.StatusBarItem).text = getStatusDisplayString();
-        (playButton as vscode.StatusBarItem).hide();
-        (pauseButton as vscode.StatusBarItem).show();
-    } else {
-        (playButton as vscode.StatusBarItem).text = getStatusDisplayString();
-        (pauseButton as vscode.StatusBarItem).text = '';
-        (pauseButton as vscode.StatusBarItem).hide();
-        (playButton as vscode.StatusBarItem).show();
-    }
-
-    lastTime = now;
-}
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
     dataManager = new DATA_MANAGER(context.workspaceState);
 
-    // numTomatoes = (dataManager as DATA_MANAGER).getNumTomatoes();
+    numTomatoes = (dataManager as DATA_MANAGER).getTodaysTomatoes();
+    pomodorosPerLongBreak = (dataManager as DATA_MANAGER).getPomodorosPerLongBreak(vscode.workspace);
+    startExtension();
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "pomodoro-timer-vscode" is now active!');
+    console.log('Extension "pomodoro-timer-vscode" is now active!');
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
