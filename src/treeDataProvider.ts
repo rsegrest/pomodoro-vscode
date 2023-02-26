@@ -7,14 +7,14 @@ class TreeDataProvider implements vscode.TreeDataProvider<TreeItem> {
     constructor() {
       this.data = [new TreeItem('cars', [
         new TreeItem(
-            'Ford', [new TreeItem('Fiesta'), new TreeItem('Focus'), new TreeItem('Mustang')]),
+            'Ford', [new TreeItem('😀🍅 Fiesta'), new TreeItem('Focus'), new TreeItem('Mustang')]),
         new TreeItem(
             'BMW', [new TreeItem('320'), new TreeItem('X3'), new TreeItem('X5')])
       ])];
     }
     // onDidChangeTreeData?: vscode.Event<void | vscode.TreeItem | vscode.TreeItem[]>;
     getTreeItem(element: vscode.TreeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
-        throw new Error('Method not implemented.');
+        return element;
     }
     getChildren(element?: TreeItem|undefined): vscode.ProviderResult<TreeItem[]> {
         if (element === undefined) {
@@ -35,4 +35,5 @@ class TreeDataProvider implements vscode.TreeDataProvider<TreeItem> {
     //     return this.trees;
     // }
 }
-module.exports = TreeDataProvider;
+// module.exports = TreeDataProvider;
+export default TreeDataProvider;

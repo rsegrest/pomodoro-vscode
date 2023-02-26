@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
+import { cwt } from './treeView';
 // const MODES = require('./modes').modes;
 // import * as MODES from './src/types/modes';
 import MODES from './types/modes';
 import DATA_MANAGER from './data/dataManager';
-// import TreeDataProvider from './treeDataProvider';
+import TreeDataProvider from './treeDataProvider';
 
 
 // const ViewManager = require('./viewManager');
@@ -204,14 +205,18 @@ export function activate(context: vscode.ExtensionContext) {
     // This line of code will only be executed once when your extension is activated
     console.log('Extension "pomodoro-timer-vscode" is now active!');
 
+    // const treeDataProvider = new TreeDataProvider();
+    // vscode.window.registerTreeDataProvider('pomodoroTimer', treeDataProvider);
+    
+    let tree = new TreeDataProvider();
+    // vscode.window.registerTreeDataProvider('pomodoroTimerTreeViewContainer', tree);
+    vscode.window.createTreeView('pomodoroTimerTreeViewContainer', {
+        treeDataProvider: tree
+    });
+
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
-    // let disposable = vscode.commands.registerCommand('pomodoro-timer-vscode.helloWorld', () => {
-    //     // The code you place here will be executed every time your command is executed
-    //     // Display a message box to the user
-    //     vscode.window.showInformationMessage('Hello World from pomodoro-timer-vscode!');
-    // });
     vscode.window.showInformationMessage('🍅 timer ready! Hit play to start work session');
     let pausePom = vscode.commands.registerCommand('pomodoro-timer-vscode.pausePomodoro', function () {
         vscode.window.showInformationMessage('🍅 timer paused');

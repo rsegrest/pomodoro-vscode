@@ -37,7 +37,24 @@
                 "command": "pomodoro-timer-vscode.playPomodoro",
                 "title": "Play Pomodoro"
             }
-        ]
+        ],
+        "viewsContainers": {
+          "activitybar": [
+            {
+              "id": "pomodoroTimerActivityBarContainer",
+              "title": "Pomodoro Timer Tree View Container",
+              "icon": "images/svg_logo.svg"
+            }
+          ]
+        },
+        "views": {
+            "pomodoroTimerActivityBarContainer": [
+                {
+                    "id": "pomodoroTimerTreeViewContainer",
+                    "name": "PTX Tree View"
+                }
+            ]
+          }
     },
     "scripts": {
         "vscode:prepublish": "yarn run package",
