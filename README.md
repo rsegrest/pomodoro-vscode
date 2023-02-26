@@ -1,30 +1,71 @@
-# pomodoro-timer README
+# pomodoro-timer-vscode README
 
-Use the pomodoro method while coding in VSCode to help stay focused, track your progress, and manage your time. Work for 25 minutes and then take a short break, and a longer break after finishing four work sessions.
+This is the README for your extension "pomodoro-timer-vscode". After writing up a brief description, we recommend including the following sections.
 
+## Features
 
-| Symbol   | Meaning |
-| ------- | --- |
-| 🍅🍅🍅      | Shows how many Pomodoros have been earned today |
-| 🛠️            | Displayed during work session (Pomodoro) |
-| ☕️            | Displayed during short break |
-| 🍔            | Displayed during long break |
+Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+
+For example if there is an image subfolder under your extension project workspace:
+
+\!\[feature X\]\(images/feature-x.png\)
+
+> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+
+## Requirements
+
+If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
 ## Extension Settings
 
-Configure the Pomodoro Timer using the following settings:
+Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
-* `condensedDisplay`: Show a number representing today's earned Pomodoros, instead of a set of images.
-* `pomodoroDuration`: Work session duration in minutes (default is 25 minutes)
-* `shortBreakDuration`: Short break duration in minutes (default is 5 minutes)
-* `longBreakDuration`: Long break duration in minutes (default is 15 minutes)
-* `pomodorosPerLongBreak`: Set how many pomodoros you will need to earn before you take a longer break (default is 4)
+For example:
+
+This extension contributes the following settings:
+
+* `myExtension.enable`: Enable/disable this extension.
+* `myExtension.thing`: Set to `blah` to do something.
+
+## Known Issues
+
+Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
-More features planned. If you'd like to provide feedback, I'd love to hear it! Email me at rsegrest77@gmail.com
+Users appreciate release notes as you update your extension.
 
-### 0.1.2
+### 1.0.0
 
-Pre-release (release candidate) version of the Pomodoro Timer VS Code extension
+Initial release of ...
 
+### 1.0.1
+
+Fixed issue #.
+
+### 1.1.0
+
+Added features X, Y, and Z.
+
+---
+
+## Following extension guidelines
+
+Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+
+* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+
+## Working with Markdown
+
+You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+
+* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
+* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
+* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+
+## For more information
+
+* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+
+**Enjoy!**
