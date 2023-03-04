@@ -6,8 +6,4 @@ const modes = {
     longBreak: '🍔',
 };
 exports.default = modes;
-// export
-// module.exports = {
-// modes,
-// }
 //# sourceMappingURL=modes.js.map

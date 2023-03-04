@@ -1,3 +1,7 @@
 dist/
+out/
+.vscode-test/
 yarn.lock
 node_modules/
+TODO.txt
+.DS_Store

@@ -72,12 +72,22 @@ class DataManager {
         const config = workspace.getConfiguration('pomodoro-timer-vscode');
         return config;
     }
+    getStartAutomatically(workspace) {
+        const configuration = this.getConfiguration(workspace);
+        const startAutomatically = configuration.get('startAutomatically');
+        return startAutomatically;
+    }
+    getRunContinuously(workspace) {
+        const configuration = this.getConfiguration(workspace);
+        const runContinuously = configuration.get('runContinuously');
+        return runContinuously;
+    }
     getIsCondensed(workspace) {
         const configuration = this.getConfiguration(workspace);
         const isCondensed = configuration.get('condensedDisplay');
         return isCondensed;
     }
-    getPomodoroLenghtMilliseconds(workspace) {
+    getPomodoroLengthMilliseconds(workspace) {
         const configuration = this.getConfiguration(workspace);
         const pomLengthInMinutes = configuration.get('pomodoroDuration');
         if (typeof pomLengthInMinutes === 'undefined') {

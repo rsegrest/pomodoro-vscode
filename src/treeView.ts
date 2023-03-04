@@ -35,6 +35,7 @@ export namespace cwt
         // in the constructor we register a refresh and item clicked function
         constructor() 
         {
+            console.log('constructor -- TreeView');
             vscode.commands.registerCommand('cwt_cucumber_view.item_clicked', r => this.itemClicked(r));
             vscode.commands.registerCommand('cwt_cucumber_view.refresh', () => this.refresh());
         }

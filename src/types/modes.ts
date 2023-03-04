@@ -4,7 +4,3 @@ const modes = {
     longBreak: '🍔',
 }
 export default modes;
-// export
-// module.exports = {
-    // modes,
-// }

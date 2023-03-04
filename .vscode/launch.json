@@ -5,6 +5,18 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+        {
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ],
+            "name": "Launch Extension",
+            "outFiles": [
+                "${workspaceFolder}/out/**/*.js"
+            ],
+            "preLaunchTask": "npm",
+            "request": "launch",
+            "type": "extensionHost"
+        },
 		{
 			"name": "Run Extension",
 			"type": "extensionHost",
@@ -15,7 +27,8 @@
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"
 			],
-			"preLaunchTask": "${defaultBuildTask}"
+			"preLaunchTask": "${defaultBuildTask}",
+            "outputCapture": "std"
 		},
 		{
 			"name": "Extension Tests",
@@ -30,7 +43,8 @@
 				"${workspaceFolder}/out/**/*.js",
 				"${workspaceFolder}/dist/**/*.js"
 			],
-			"preLaunchTask": "tasks: watch-tests"
+			"preLaunchTask": "tasks: watch-tests",
+            "outputCapture": "std"
 		}
 	]
 }

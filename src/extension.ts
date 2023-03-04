@@ -26,7 +26,7 @@ const longBreakIcon = '🍔';
 let numTomatoes = 0;
 let elapsedTime = 0;
 let lastTime = new Date().getTime();
-let timerRunning = true;
+let timerRunning = false;
 
 let mode = MODES.working;
 let modeIcon = workingIcon;
@@ -36,10 +36,14 @@ let timerSpan:number|null = null;
 let remainingTime:number|null = null;
 let playButton:vscode.StatusBarItem|null = null;
 let pauseButton:vscode.StatusBarItem|null = null;
+
+let doesStartAutomatically = false;
+let doesRunContinuously = false;
+
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 
-const pad = (n:number) => n < 10 ? '0' + n : n;
+export const pad = (n:number) => n < 10 ? '0' + n : n;
 const formatTime = (time:number) => {
     return Math.floor(time/60000) + ':' + pad(Math.floor((time%60000)/1000));
 }
@@ -47,7 +51,7 @@ const formatTime = (time:number) => {
 function getTimerSpan() {
     const workspace = vscode.workspace;
     if (mode === MODES.working) {
-        return (dataManager as DATA_MANAGER).getPomodoroLenghtMilliseconds(vscode.workspace);
+        return (dataManager as DATA_MANAGER).getPomodoroLengthMilliseconds(vscode.workspace);
     }
     if (mode === MODES.break) {
         return (dataManager as DATA_MANAGER).getShortBreakLengthMilliseconds(vscode.workspace);
@@ -66,6 +70,8 @@ function initializeTime() {
     elapsedTime = 0;
     timerRunning = false;
 }
+
+
 function changeMode() {
     if (mode === MODES.working) {
         if (numTomatoes % pomodorosPerLongBreak === 0) {
@@ -99,6 +105,8 @@ function getTomatoDisplayString():string {
     }
     return tomatoes;
 }
+
+
 function getStatusDisplayString():string {
     const tomatoes = getTomatoDisplayString();
     if (timerRunning) {
@@ -123,7 +131,9 @@ function advance() {
             }
             changeMode();
             initializeTime();
-            timerRunning = false;
+            if (!doesRunContinuously) {
+                timerRunning = false;
+            }
         }
         (playButton as vscode.StatusBarItem).text = '';
         (pauseButton as vscode.StatusBarItem).text = getStatusDisplayString();
@@ -139,6 +149,7 @@ function advance() {
     lastTime = now;
 }
 
+
 function playTimer() {
     timerRunning = true;
 }
@@ -147,7 +158,6 @@ function playTimer() {
 function pauseTimer() {
     timerRunning = false;
 }
-
 
 
 function showStatusDisplay() {
@@ -185,10 +195,6 @@ function startExtension() {
     pauseButton = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left, 2
     );
-    // messageDisplay = vscode.window.createStatusBarItem(
-    //     vscode.StatusBarAlignment.Left, 3
-    // );
-    // vscode.window.setStatusBarMessage('👈 Start earning tomatoes! |');
 }
 
 
@@ -197,8 +203,14 @@ function startExtension() {
 export function activate(context: vscode.ExtensionContext) {
     dataManager = new DATA_MANAGER(context.workspaceState);
 
+    doesStartAutomatically = (dataManager as DATA_MANAGER).getStartAutomatically(vscode.workspace);
+    doesRunContinuously = (dataManager as DATA_MANAGER).getRunContinuously(vscode.workspace);
     numTomatoes = (dataManager as DATA_MANAGER).getTodaysTomatoes();
     pomodorosPerLongBreak = (dataManager as DATA_MANAGER).getPomodorosPerLongBreak(vscode.workspace);
+    if (doesStartAutomatically) {
+        timerRunning = true;
+    }
+
     startExtension();
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)

@@ -78,11 +78,24 @@ class DataManager {
         const jsonData = JSON.stringify(data);
         this.storage.update(key, jsonData);
     }
-
+    
     getConfiguration(workspace:(typeof vscode.workspace)):WorkspaceConfiguration {
         const config = workspace.getConfiguration('pomodoro-timer-vscode');
         return config;
     }
+
+    getStartAutomatically(workspace:(typeof vscode.workspace)):boolean {
+        const configuration = this.getConfiguration(workspace);
+        const startAutomatically = configuration.get('startAutomatically') as boolean;
+        return startAutomatically;
+    }
+
+    getRunContinuously(workspace:(typeof vscode.workspace)):boolean {
+        const configuration = this.getConfiguration(workspace);
+        const runContinuously = configuration.get('runContinuously') as boolean;
+        return runContinuously;
+    }
+
 
     getIsCondensed(workspace:(typeof vscode.workspace)):boolean {
         const configuration = this.getConfiguration(workspace);
@@ -90,7 +103,7 @@ class DataManager {
         return isCondensed;
     }
 
-    getPomodoroLenghtMilliseconds(workspace:(typeof vscode.workspace)):number {
+    getPomodoroLengthMilliseconds(workspace:(typeof vscode.workspace)):number {
         const configuration = this.getConfiguration(workspace);
         const pomLengthInMinutes:number|undefined = configuration.get('pomodoroDuration');
         if (typeof pomLengthInMinutes === 'undefined') {
